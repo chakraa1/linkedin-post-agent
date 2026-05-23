@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "linkedin-post-agent"
+version = "0.1.0"
+description = "AI-powered LinkedIn post creation and scheduling agent"
+requires-python = ">=3.10"
+dependencies = [
+    "crewai>=0.80.0",
+    "crewai-tools>=0.20.0",
+    "anthropic>=0.40.0",
+    "openai>=1.50.0",
+    "requests>=2.31.0",
+    "requests-oauthlib>=1.3.1",
+    "apscheduler>=3.10.4",
+    "sqlalchemy>=2.0.0",
+    "python-dotenv>=1.0.0",
+    "rich>=13.7.0",
+    "click>=8.1.7",
+    "pyyaml>=6.0.1",
+]
+
+[project.scripts]
+linkedin-post-agent = "linkedin_post_agent.main:cli"
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,61 @@
+# ─── LLM Provider Definitions ─────────────────────────────────────────────────
+providers:
+  anthropic:
+    api_key_env: ANTHROPIC_API_KEY
+    models:
+      - claude-opus-4-7
+      - claude-sonnet-4-6
+      - claude-haiku-4-5-20251001
+
+  openai:
+    api_key_env: OPENAI_API_KEY
+    models:
+      - gpt-4o
+      - gpt-4-turbo
+      - gpt-3.5-turbo
+
+  perplexity:
+    api_key_env: PERPLEXITY_API_KEY
+    base_url: https://api.perplexity.ai
+    models:
+      - sonar-pro          # Best: web-grounded, cites sources
+      - sonar              # Lighter, still web-grounded
+      - sonar-reasoning-pro
+
+  ollama:
+    base_url: http://localhost:11434
+    models:
+      - llama3.2
+      - mistral
+      - qwen2.5
+
+  groq:
+    api_key_env: GROQ_API_KEY
+    models:
+      - llama-3.1-70b-versatile
+      - mixtral-8x7b-32768
+
+# ─── Per-Agent LLM Assignment ─────────────────────────────────────────────────
+# Change provider/model here to switch which LLM each agent uses.
+agent_llm_mapping:
+
+  research_agent:
+    provider: anthropic
+    model: claude-sonnet-4-6    # Switch to claude-opus-4-7 for deeper research
+
+  content_writer:
+    provider: anthropic
+    model: claude-sonnet-4-6    # Best creative writing + long-form
+
+  post_editor:
+    provider: anthropic
+    model: claude-haiku-4-5-20251001  # Fast edits/revisions
+
+  publisher:
+    provider: anthropic
+    model: claude-haiku-4-5-20251001  # Lightweight publishing tasks
+
+# ─── Fallback (used when agent not in mapping above) ──────────────────────────
+default:
+  provider: anthropic
+  model: claude-sonnet-4-6

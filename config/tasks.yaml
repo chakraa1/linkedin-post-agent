@@ -1,0 +1,279 @@
+research_task:
+  description: >
+    PART A — TREND RESEARCH
+    Search for the LATEST (past 7-14 days) high-signal topics relevant to:
+    Cloud Engineers, Platform Engineers, Software Architects, and Product
+    Engineering Leadership.
+
+    Focus areas:
+    - Kubernetes, service mesh, eBPF, platform engineering trends
+    - AWS/Azure/GCP major announcements or feature launches
+    - Infrastructure-as-Code (Terraform, Pulumi, CDK) updates
+    - Observability, OpenTelemetry, SRE practices
+    - FinOps, cloud cost optimization strategies
+    - Developer experience, internal developer platforms (IDP)
+    - AI/ML infrastructure, GPU orchestration, inference optimization
+    - Security: supply chain, zero-trust, runtime protection
+    - Architecture patterns: microservices, event-driven, WASM
+
+    Deliver:
+    1. Top 3 trending topics with a 2-3 sentence summary each
+    2. Key statistics, quotes, or data points per topic
+    3. Source citations (URLs, publication names)
+    4. A recommended PRIMARY topic for the LinkedIn post with justification
+
+    PART B — COMPETITIVE LANDSCAPE (STEP 1)
+    Analyse what similar profiles are posting on LinkedIn about the recommended
+    topic and what is getting the most engagement.
+
+    Target profiles (senior leadership in cloud/infra/engineering):
+    - Senior Vice President of Engineering
+    - Director of Engineering / Director of Platform Engineering
+    - Head of Cloud Engineering / Head of Infrastructure / Head of IT
+    - Senior Engineering Manager
+    - Senior Architect (Cloud / Infrastructure / Solutions)
+    - Senior Consultant (Infrastructure Engineering)
+    - VP of Platform Engineering / VP of Infrastructure
+    - CTO / CIO at global investment banks and fintech firms
+    - Principal Engineer / Staff Engineer at regulated-industry tech orgs
+
+    For the recommended topic, identify:
+    1. The 2-3 most common angles these senior leaders are using
+       (e.g. "vendor comparison", "lessons learned", "prediction/opinion")
+    2. Engagement patterns: what hooks and formats perform best?
+       Focus on: question-ending posts, contrarian first lines, posts with
+       a concrete number or outcome in line 1, short punchy paragraphs
+    3. A DIFFERENTIATION ANGLE — an angle NOT yet covered well by peer profiles
+    4. One specific insight or data point peer posts are missing
+
+    Then recommend ONE of these two content approaches:
+    APPROACH A — Competitive Derivative: Take the top-performing peer angle
+    on this topic, identify what non-obvious insight is missing from it,
+    and frame a post that builds on the trend but adds a practitioner twist
+    peers have missed. Best when a topic is trending and covered widely.
+    APPROACH B — Fresh Research: Surface a genuinely new angle or recent
+    development (past 7-14 days) that peer profiles have NOT yet posted about.
+    Best when Perplexity finds a breaking announcement or new report.
+    State clearly which approach and why.
+
+  expected_output: >
+    A structured research report in markdown containing:
+    - ## Top 3 Trending Topics section with summaries and sources
+    - ## Key Data Points & Quotes section
+    - ## Recommended Topic with 1-paragraph justification
+    - ## Competitive Landscape section:
+        * Common angles used by peer SVP/Director profiles on this topic
+        * Engagement patterns observed (what hooks/formats perform best)
+        * Differentiation angle recommended for our post
+        * Missing insight peer posts have not addressed
+    Total length: 600-1000 words. No fluff, only signal.
+
+competitor_research_task:
+  description: >
+    Standalone competitive landscape research for LinkedIn thought leadership.
+
+    Target roles (any of these senior leadership profiles):
+    - Senior Vice President / Director of Engineering
+    - Head of Cloud Engineering / Head of Infrastructure / Head of IT
+    - Senior Engineering Manager
+    - Senior Architect (Cloud / Infrastructure / Solutions)
+    - Senior Consultant (Infrastructure Engineering)
+    - VP of Platform Engineering
+    - CTO / CIO at investment banks, fintech, or regulated industries
+    - Principal / Staff Engineer at large-scale tech organisations
+
+    Topic: {topic}
+
+    Research what these senior engineering leaders are currently posting on
+    LinkedIn about this topic. Identify:
+    1. The 3 most common angles/framings from peer profiles
+    2. Which formats and hooks generate the most engagement:
+       contrarian openers, concrete outcome in line 1, question at end,
+       posts with a specific number or percentage, short punchy paragraphs
+    3. A differentiation angle that would outperform peer content
+    4. The specific missing insight peer posts are overlooking
+
+    Then recommend APPROACH A (derivative + twist) or APPROACH B (fresh angle)
+    and explain which gives a higher-engagement edge for this topic.
+
+  expected_output: >
+    A competitive intelligence brief in markdown:
+    - ## Target Roles Analysed
+    - ## Peer Post Patterns (top 3 angles observed)
+    - ## High-Engagement Hooks (what formats are working)
+    - ## Recommended Differentiation Angle
+    - ## Missing Insight to Include
+    - ## Recommended Approach: A or B (with one-sentence justification)
+    Length: 250-400 words. Concise, actionable, no padding.
+
+content_task:
+  description: >
+    Using the research below, write an engaging LinkedIn post targeted at
+    senior Cloud Engineers, Platform Engineers, Architects, and Product
+    Engineering Leaders.
+
+    Research:
+    {research}
+
+    Post requirements:
+    - Open with a scroll-stopping HOOK (first 2 lines visible before "see more")
+    - Share a concrete insight, lesson, or prediction — not generic advice
+    - Use short paragraphs (1-3 lines max) for mobile readability
+    - Include a key statistic or data point from the research
+    - End with a thought-provoking question or call-to-action
+    - Add 4-6 relevant hashtags at the end (e.g. #PlatformEngineering #Kubernetes)
+    - Length: 200-400 words (LinkedIn sweet spot for engagement)
+    - Tone: practitioner voice — smart, direct, no buzzword bingo
+    - Do NOT use generic AI-sounding phrases like "In today's landscape..."
+
+  expected_output: >
+    A complete, publish-ready LinkedIn post as plain text with hashtags.
+    No markdown headers, no explanations — just the post content itself.
+
+edit_task:
+  description: >
+    Review and improve this LinkedIn post draft based on the following
+    feedback from the human reviewer:
+
+    ORIGINAL POST:
+    {original_post}
+
+    FEEDBACK:
+    {feedback}
+
+    Apply the feedback precisely. Preserve what was good. The revised post
+    must still meet all quality criteria: strong hook, technical insight,
+    short paragraphs, data point, CTA/question, and hashtags.
+
+  expected_output: >
+    A revised LinkedIn post as plain text, fully incorporating the feedback.
+    Same format as the original: no headers, no explanations, just the post.
+
+validate_research_task:
+  description: >
+    You are the research quality gate. Review the research output below and
+    check for ALL of the following — do not skip any point.
+
+    1. SECTIONS: Are all 4 required sections present?
+       - ## Top 3 Trending Topics (with summaries and sources)
+       - ## Key Data Points & Quotes
+       - ## Recommended Topic (with justification)
+       - ## Competitive Landscape (with differentiation angle and missing insight)
+    2. SOURCES: Are at least 3 real, authoritative citations present?
+       Reject placeholder or vague sources (e.g. "example.com", "various sources").
+    3. DATA: Is there at least one concrete data point — a number, percentage,
+       or dated statistic — that the content writer can reference in the post?
+    4. DIFFERENTIATION: Does the Competitive Landscape section include a specific
+       differentiation angle, not just a generic description of peer posts?
+
+    Research to review:
+    {research_output}
+
+    Return ONLY a structured verdict in this exact format:
+    VERDICT: PASS
+    or
+    VERDICT: FAIL
+    ISSUES:
+    - SECTION_MISSING: ...
+    - SOURCE_QUALITY: ...
+    (one bullet per issue, max 4, no narrative)
+
+  expected_output: >
+    VERDICT: PASS or FAIL. If FAIL, a bulleted list of specific issues using
+    the rule names above. No prose, no padding, no suggestions.
+
+validate_content_task:
+  description: >
+    You are the LinkedIn post quality gate. Audit the post below against ALL
+    nine rules (A-I). A single violation means FAIL — do not skip any rule.
+
+    RULES:
+    A. HUMAN_TONE: Average sentence ≤ 15 words. Does the post sound like a real
+       senior engineer or AI-generated corporate speak? Flag GPT filler phrases
+       ("game-changer", "paradigm shift", "in today's landscape", "delve into",
+       "navigate the complexities", "as we move forward", "ever-evolving").
+    B. WORD_COUNT: Is the post 200-300 words? Hard reject if > 300. FAIL if < 200.
+    C. EYE_CATCHING_HOOK: Is the opening line bold, specific, data-led, and
+       counterintuitive? A generic or broad rhetorical opener is a FAIL.
+    D. NON_OBVIOUS_INSIGHT: Does the post contain at least one insight that
+       challenges conventional thinking or surfaces a practitioner-only constraint?
+       Restating well-known facts is a FAIL.
+    E. ACHIEVEMENT_GUARD: No unhedged first-person active claims — "I built",
+       "I implemented", "we launched", "we deployed", "we designed", "I led".
+       Passive voice or hedged framing required (e.g. "a team I advised",
+       "was observed at a Tier 1 bank"). FAIL if unhedged claim detected.
+    F. FORMAT_COMPLIANCE: No em dash (—), en dash (–), or double hyphen ( -- ).
+       Replace every instance with a comma, colon, or full stop. FAIL if found.
+    G. SOURCE_LINKS: Is there a ## SOURCES section with at least 2 references in
+       format [Title] - domain.com? FAIL if missing or fewer than 2 sources.
+    H. ROLE_ALIGNMENT: Are there 3-5 hashtags? At least one must target senior
+       leadership roles: #CloudEngineering #PlatformEngineering
+       #EngineeringLeadership #TechLeadership #FinOps #InfrastructureEngineering.
+       FAIL if < 3 hashtags or none target the leadership audience.
+    I. ENGAGEMENT_HOOK: Does the post end with a question or CTA that invites
+       comments? The last non-hashtag line must contain "?" or a direct CTA.
+       FAIL if the post closes with a statement instead of a question/CTA.
+
+    Post to audit:
+    {post_content}
+
+    Return ONLY:
+    VERDICT: PASS
+    or
+    VERDICT: FAIL
+    ISSUES:
+    - RULE_NAME: exact quote of the problematic text or description of violation
+
+  expected_output: >
+    VERDICT: PASS or FAIL. If FAIL, one bullet per violated rule (A-I) with the
+    rule name and the exact problematic text or violation description. No narrative.
+
+validate_edit_task:
+  description: >
+    You are the post-edit regression checker. Review all three inputs below.
+
+    ORIGINAL POST:
+    {original_post}
+
+    HUMAN FEEDBACK THAT WAS REQUESTED:
+    {feedback_applied}
+
+    REVISED POST:
+    {revised_post}
+
+    Check ALL of the following:
+    1. FEEDBACK_APPLIED: Was every piece of human feedback acted on?
+       List any feedback items that were ignored or only partially applied.
+    2. EM_DASH_REGRESSION: Did the revision introduce any new em dashes (—)?
+    3. GPT_REGRESSION: Did the revision introduce new AI filler phrases or
+       corporate speak not present in the original?
+    4. SOURCES_INTACT: Are the ## SOURCES still present and complete?
+    5. TIGHTNESS: Is the revision tighter (no padding added)?
+
+    Return ONLY:
+    VERDICT: PASS
+    or
+    VERDICT: FAIL
+    ISSUES:
+    - ISSUE_NAME: specific problem, quoting the text where possible
+
+  expected_output: >
+    VERDICT: PASS or FAIL. If FAIL, one bullet per issue with name and
+    specific problematic text quoted. No narrative, no praise.
+
+publish_task:
+  description: >
+    The following LinkedIn post has been approved for publishing:
+
+    {post_content}
+
+    Action: {action}
+    Schedule time (if applicable): {schedule_time}
+
+    If action is "post_now": use the LinkedIn tool to publish immediately.
+    If action is "schedule": confirm the post is queued for the given time.
+    Report the outcome clearly.
+
+  expected_output: >
+    A brief confirmation message with: post status (published/scheduled),
+    post ID or job ID, and the LinkedIn post URL if available.
