@@ -161,7 +161,8 @@ class PostScheduler:
                 record.status = "failed"
                 record.error_message = result.get("error", "Unknown")
                 session.commit()
-                console.print(f"[red]Scheduling failed: {result.get('error')}[/red]")
+                from rich.markup import escape
+                console.print(f"[red]Scheduling failed: {escape(str(result.get('error', 'Unknown')))}[/red]")
 
         return post_id
 

@@ -16,6 +16,7 @@ Commands:
 """
 import os
 import sys
+from datetime import datetime
 from pathlib import Path
 
 import click
@@ -154,8 +155,7 @@ def list_drafts(date):
 
 
 @cli.command("mark-reviewed")
-@click.argument("folder", metavar="FOLDER",
-                help="Date folder to mark as reviewed (e.g. outputs/2026-05-23/)")
+@click.argument("folder", metavar="FOLDER")
 def mark_reviewed(folder):
     """
     Mark all posts in a generated date folder as reviewed (Step 5).
@@ -229,13 +229,14 @@ def mark_reviewed(folder):
 
 
 @cli.command("approve-post")
-@click.argument("post_file", metavar="POST_FILE",
-                help="Path to a reviewed draft .md file")
+@click.argument("post_file", metavar="POST_FILE")
 @click.option("--schedule", "-s", default=None, metavar="YYYY-MM-DD HH:MM",
               help="Schedule time (12:30 or 18:30 IST recommended).")
 @click.option("--now", is_flag=True, default=False,
               help="Post immediately instead of scheduling.")
-def approve_post(post_file, schedule, now):
+@click.option("--yes", "-y", is_flag=True, default=False,
+              help="Skip confirmation prompt.")
+def approve_post(post_file, schedule, now, yes):
     """
     Approve a reviewed draft and post or schedule it to LinkedIn (Step 5+6).
 
@@ -281,7 +282,7 @@ def approve_post(post_file, schedule, now):
         console.print("[red]Specify --now or --schedule YYYY-MM-DD HH:MM (e.g. 12:30 or 18:30)[/red]")
         raise SystemExit(1)
 
-    confirmed = click.confirm("[bold]Confirm: approve and post this to LinkedIn?[/bold]", default=False)
+    confirmed = yes or click.confirm("[bold]Confirm: approve and post this to LinkedIn?[/bold]", default=False)
     if not confirmed:
         console.print("[yellow]Cancelled.[/yellow]")
         return
