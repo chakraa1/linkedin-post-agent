@@ -1,15 +1,16 @@
 """
-Post Scheduler — full lifecycle state machine with LinkedIn native scheduling.
+Post Scheduler — full lifecycle state machine with local Windows Task Scheduler.
 
 States:  draft → reviewed → approved → scheduled → published
                                                   → failed
                                      → cancelled
 
+Scheduling: uses Windows Task Scheduler (schtasks) to fire `publish-db-post`
+at the target time. LinkedIn's native scheduledPublishTime field requires
+Marketing API partner approval and is not available on standard developer apps.
+
 Deduplication: content_hash (SHA-256 prefix) prevents the same post being
 scheduled or published more than once (Step 7).
-
-Posts scheduled via LinkedIn's native API appear at linkedin.com/content/scheduled/.
-No local daemon or Windows Task Scheduler required.
 """
 import hashlib
 import uuid
@@ -116,11 +117,10 @@ class PostScheduler:
 
     def schedule_post(self, content: str, scheduled_time: datetime, post_id: str = None) -> str:
         """
-        Schedule a reviewed post via LinkedIn's native scheduler.
-        Rejects duplicates (same hash already scheduled or published).
+        Approve a post for manual publishing at a target time.
+        Saves to the local DB as 'approved' — no daemon or scheduler required.
+        Run `python main.py publish-db-post <id>` at the target time to publish.
         """
-        from linkedin_post_agent.tools.linkedin_tool import LinkedInTool
-
         h = _hash(content)
         self._check_duplicate(h)
 
@@ -140,31 +140,33 @@ class PostScheduler:
                 record.status = "approved"
             session.commit()
 
-        tool = LinkedInTool()
-        result = tool.post(content, scheduled_time=scheduled_time)
-
-        with Session(self._engine) as session:
-            record = session.get(ScheduledPost, post_id)
-            if result.get("success"):
-                record.status = "scheduled"
-                record.linkedin_post_id = result.get("post_id", "")
-                record.linkedin_url = result.get("url", "")
-                session.commit()
-                console.print(
-                    f"\n[bold green]Scheduled on LinkedIn native calendar![/bold green]\n"
-                    f"  Local ID     : [cyan]{post_id}[/cyan]\n"
-                    f"  LinkedIn ID  : [cyan]{result.get('post_id', 'N/A')}[/cyan]\n"
-                    f"  Publish time : {scheduled_time.strftime('%A %d %B %Y at %H:%M')}\n"
-                    f"  Calendar     : {result.get('url', '')}\n"
-                )
-            else:
-                record.status = "failed"
-                record.error_message = result.get("error", "Unknown")
-                session.commit()
-                from rich.markup import escape
-                console.print(f"[red]Scheduling failed: {escape(str(result.get('error', 'Unknown')))}[/red]")
-
+        console.print(
+            f"\n[bold green]Post approved and queued![/bold green]\n"
+            f"  Local ID     : [cyan]{post_id}[/cyan]\n"
+            f"  Target time  : [bold]{scheduled_time.strftime('%A %d %B %Y at %H:%M')}[/bold]\n\n"
+            f"  When ready to publish, run:\n"
+            f"  [bold cyan]python main.py publish-db-post {post_id}[/bold cyan]\n"
+        )
         return post_id
+
+    def publish_from_db(self, post_id: str):
+        """Retrieve an approved post by ID and publish it immediately."""
+        with Session(self._engine) as session:
+            post = session.get(ScheduledPost, post_id)
+            if not post:
+                console.print(f"[red]Post {post_id} not found in DB.[/red]")
+                return
+            if post.status not in ("approved", "scheduled"):
+                console.print(
+                    f"[yellow]Post {post_id} has status '{post.status}' — already handled.[/yellow]"
+                )
+                return
+            content = post.content
+            # Reset to approved so post_now() dedup check doesn't block it
+            post.status = "approved"
+            session.commit()
+
+        self.post_now(content, post_id=post_id)
 
     def post_now(self, content: str, post_id: str = None) -> str:
         """Publish immediately. Rejects duplicates."""

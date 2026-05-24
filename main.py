@@ -311,6 +311,14 @@ def list_posts():
     ps.list_scheduled()
 
 
+@cli.command("publish-db-post")
+@click.argument("post_id")
+def publish_db_post(post_id):
+    """Publish a scheduled post by ID (called automatically by Windows Task Scheduler)."""
+    ps = PostScheduler()
+    ps.publish_from_db(post_id)
+
+
 @cli.command("cancel-post")
 @click.argument("post_id")
 def cancel_post(post_id):
