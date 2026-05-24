@@ -6,13 +6,25 @@ research_task:
     Engineering Leadership.
 
     Focus areas:
-    - Kubernetes, service mesh, eBPF, platform engineering trends
+    - Cloud Engineering, Cloud Architecture , Cloud Security , platform engineering trends
+    - AI Agent/RAG Implemenations in Cloud/Infra (e.g. AIOps, FinOps, DevOps)
     - AWS/Azure/GCP major announcements or feature launches
+    - Agent Architecture real challenges faced by practitioners
+    - Enterprise Cloud Architecture & Hybrid Data Platforms (AWS, On-prem to Cloud migration)
+    - Legacy Platform Modernization & Large-scale System Rebuilds (Banking/Finance context)
+    - AIOps, Observability, and Telemetry at Scale (Elasticsearch, Prometheus, Grafana)
+    - MLOps Infrastructure & AI Deployment Optimization (AWS SageMaker, automated pipelines)
+    - Database Modernization & Migration (Open-source adoption, Multi-tenant DB platforms)
+    - Infrastructure-as-Code (Terraform Enterprise, Ansible) & Cloud Orchestration
+    - Kubernetes, Containerization, & Microservices Architecture (API Gateways, Service Mesh)
+    - FinOps, IT Cost Optimization, and Open-Source ROI strategies
+    - Security & Zero-Trust Architecture: Real-time intelligence, RBAC/ABAC implementations
+    - Engineering Leadership: Scaling teams, managing architectural debt, org redesigns
+    - Kubernetes, service mesh, platform engineering trends
     - Infrastructure-as-Code (Terraform, Pulumi, CDK) updates
-    - Observability, OpenTelemetry, SRE practices
     - FinOps, cloud cost optimization strategies
     - Developer experience, internal developer platforms (IDP)
-    - AI/ML infrastructure, GPU orchestration, inference optimization
+    - AI/ML infrastructure,inference optimization
     - Security: supply chain, zero-trust, runtime protection
     - Architecture patterns: microservices, event-driven, WASM
 
